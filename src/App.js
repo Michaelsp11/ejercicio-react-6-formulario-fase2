@@ -23,13 +23,13 @@ function App() {
     recordarPassword: true,
   });
   const guardarDatosPersonales = (datos) => {
-    setDatosPersonales({
-      ...datosPersonales,
-      nombre: datos.nombre,
-      apellidos: datos.apellidos,
-      fechaNacimiento: datos.fechaNacimiento,
-      email: datos.email,
-    });
+    setDatosPersonales(datos);
+  };
+  const guardarDatosRegistro = (datos) => {
+    setDatosRegistro(datos);
+  };
+  const guardarDatosAcceso = (datos) => {
+    setDatosAcceso(datos);
   };
   const avanzaPaso = () => {
     if (paso === 4) {
@@ -61,6 +61,7 @@ function App() {
             avanzaPaso={avanzaPaso}
             datosRegistro={datosRegistro}
             retrocedePaso={retrocedePaso}
+            guardarDatos={guardarDatosRegistro}
           />
         )}
         {paso === 3 && (
@@ -68,9 +69,17 @@ function App() {
             datosAcceso={datosAcceso}
             avanzaPaso={avanzaPaso}
             retrocedePaso={retrocedePaso}
+            guardarDatos={guardarDatosAcceso}
           />
         )}
-        {paso === 4 && <Resumen retrocedePaso={retrocedePaso} />}
+        {paso === 4 && (
+          <Resumen
+            retrocedePaso={retrocedePaso}
+            datosPersonales={datosPersonales}
+            datosRegistro={datosRegistro}
+            datosAcceso={datosAcceso}
+          />
+        )}
       </div>
     </>
   );

@@ -2,15 +2,18 @@ import PropTypes from "prop-types";
 import { useFormulario } from "../hooks/useFormulario";
 
 export const Paso2 = (props) => {
-  const { datosRegistro, avanzaPaso, retrocedePaso } = props;
-  const {
-    datos: { username, password, repitePassword },
-    setDato,
-  } = useFormulario(datosRegistro);
+  const { datosRegistro, avanzaPaso, retrocedePaso, guardarDatos } = props;
+  const { datos, setDato } = useFormulario(datosRegistro);
+  const { username, password, repitePassword } = datos;
+  const enviaPaso = (e) => {
+    e.preventDefault();
+    guardarDatos(datos);
+    avanzaPaso();
+  };
   return (
     <>
       <h2>Paso 2: Datos de acceso</h2>
-      <form noValidate onSubmit={avanzaPaso}>
+      <form noValidate onSubmit={enviaPaso}>
         <div className="form-group">
           <label htmlFor="username">Nombre de usuario:</label>
           <input
@@ -60,4 +63,5 @@ Paso2.propTypes = {
     password: PropTypes.string.isRequired,
     repitePassword: PropTypes.string.isRequired,
   }).isRequired,
+  guardarDatos: PropTypes.func.isRequired,
 };
